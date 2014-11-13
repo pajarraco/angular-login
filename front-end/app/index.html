@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="webForm" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="webForm" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="webForm" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="webForm" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Form</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="css/app.css" rel="stylesheet" type="text/css">
+
+        <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+
+        <script src="lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="lib/bootstrap/js/tooltip.js" type="text/javascript"></script>
+        <script src="lib/bootstrap/js/popover.js" type="text/javascript"></script>
+
+        <script src="lib/angular/angular.min.js" type="text/javascript"></script>
+        <script src="lib/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+        <script src="lib/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+        <script src="lib/angular-resource/angular-resource.min.js" type="text/javascript"></script>
+
+        <script src="lib/fastclick/lib/fastclick.js" type="text/javascript"></script>
+
+        <script src="js/app.js" type="text/javascript"></script>
+        <script src="js/services.js" type="text/javascript"></script>
+        <script src="js/filters.js" type="text/javascript"></script>
+        <script src="js/directives.js" type="text/javascript"></script>
+        <script src="js/animations.js" type="text/javascript"></script>
+        <script src="js/controllers/login_ctrl.js" type="text/javascript"></script>
+        <script src="js/controllers/nav_ctrl.js" type="text/javascript"></script>
+        <script src="js/controllers/home_ctrl.js" type="text/javascript"></script>
+        <script src="js/controllers/dashboard_ctrl.js" type="text/javascript"></script>
+        <script src="js/controllers/users_ctrl.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="loader">
+            <div id="floatingCirclesG">
+                <div class="f_circleG" id="frotateG_01">
+                </div>
+                <div class="f_circleG" id="frotateG_02">
+                </div>
+                <div class="f_circleG" id="frotateG_03">
+                </div>
+                <div class="f_circleG" id="frotateG_04">
+                </div>
+                <div class="f_circleG" id="frotateG_05">
+                </div>
+                <div class="f_circleG" id="frotateG_06">
+                </div>
+                <div class="f_circleG" id="frotateG_07">
+                </div>
+                <div class="f_circleG" id="frotateG_08">
+                </div>
+            </div>
+            <div id="floatingTextG">Loading...</div>
+        </div>
+        <div ng-controller="NavCtrl">
+<!--            Navigator Bar -->
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+<!--                    Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="brand">
+                            <a ui-sref="home">                          
+                                <img src="img/CW-Logo.png" alt=""/>
+                            </a>
+                        </div>
+                    </div>
+<!--                    Collect the nav links, forms, and other content for toggling -->
+                    <div ng-show="$location.path() != '/'">
+                        <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li ng-class="{active: $location.path() == '/home'}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                                <li ng-class="{active: $location.path() == '/users'}" ng-show="userlevel == 0 || userlevel == 1 || userlevel == 4"><a ui-sref="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                                <li ><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            </ul>
+                        </div> 
+                    </div>
+                </div> 
+            </nav> 
+            <div class="row" >
+                <div class="col-xs-12">            
+                    <div id="content" class="container-fluid" ui-view></div>
+                </div>
+            </div>
+            <footer class="container-fluid ">
+                <div class="panel panel-default">
+                    <div class="panel-body">Design By. Cooper & Westwood Advertising<br />
+                        Web Form App: v<span app-version></span></div>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "angular-loader",
+  "version": "1.3.0-rc.1",
+  "main": "./angular-loader.js",
+  "dependencies": {
+    "angular": "1.3.0-rc.1"
+  },
+  "homepage": "https://github.com/angular/bower-angular-loader",
+  "_release": "1.3.0-rc.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.3.0-rc.1",
+    "commit": "cafb3009f0cd2f6b5ef4cc219c86affc8ce81433"
+  },
+  "_source": "git://github.com/angular/bower-angular-loader.git",
+  "_target": "1.3.x",
+  "_originalSource": "angular-loader"
+}

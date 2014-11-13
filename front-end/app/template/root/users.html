@@ -1,0 +1,131 @@
+<div id="msg" class="alert text-uppercase" ng-class="[alert.classAlert, alert.active]" role="alert">{{alert.msgAlert}}</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h1>Users</h1> 
+        <h4>Website Proposal</h4>
+    </div>
+    <div class="col-sm-6 text-bottom">
+        <br/><br/>
+        <div class="text-right">
+            <button type="button" class="btn btn-default" ng-click="newUser()">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary" ng-show="showNewUser">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{editpanel.tittle}}</h3>
+    </div>
+    <div class="panel-body">
+        <form name="newuser_form" novalidate ng-submit="saveUser()" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="fullname" class="col-sm-2 control-label">Full Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Full Name" ng-model="newuser.fullname" ng-minlength=3 ng-maxlength=200 required />
+                    <div class="label label-danger" ng-show="newuser_form.fullname.$dirty && newuser_form.fullname.$invalid">
+                        <span ng-show="newuser_form.fullname.$error.required">Your Full Name is required.</span>
+                        <span ng-show="newuser_form.fullname.$error.minlength">Your Full Name is required to be at least 3 characters</span>
+                        <span ng-show="newuser_form.fullname.$error.maxlength">Your Full Name cannot be longer than 200 characters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" ng-disabled="editpanel.usernameclass" name="username" id="username" placeholder="Email" ng-model="newuser.username" ensure-unique="{{newuser.username}}" action="{{editpanel.action}}" ng-minlength=3 ng-maxlength=200 required />
+                    <div class="label label-danger" ng-show="newuser_form.username.$dirty && newuser_form.username.$invalid">
+                        <span ng-show="newuser_form.username.$error.required">Your name is required.</span>
+                        <span ng-show="newuser_form.username.$error.email">That is not a valid email. Please input a valid email.</span>
+                        <span ng-show="newuser_form.username.$error.minlength">Your name is required to be at least 3 characters</span>
+                        <span ng-show="newuser_form.username.$error.maxlength">Your name cannot be longer than 200 characters</span>
+                        <span ng-show="newuser_form.username.$error.unique">That username is taken, please try another</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" ng-model="newuser.password" ng-minlength=6 ng-maxlength=15 />
+                    <div class="label label-danger" ng-show="newuser_form.password.$dirty && newuser_form.password.$invalid">
+                        <span ng-show="newuser_form.password.$error.required">Your Password is required.</span>
+                        <span ng-show="newuser_form.password.$error.minlength">Your Password is required to be at least 6 characters</span>
+                        <span ng-show="newuser_form.password.$error.maxlength">Your Password cannot be longer than 15 characters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="repassword" class="col-sm-2 control-label">Retry Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Password" ng-model="newuser.repassword" pw-check="password" />
+                    <div class="label label-danger" ng-show="newuser_form.repassword.$dirty && newuser_form.repassword.$invalid">
+                        <span ng-show="newuser_form.repassword.$error.pwmatch">Passwords don't match.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="level" class="col-sm-2 control-label">Level</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="level" id="level" ng-model="newuser.level" required>
+                        <option value="">Select Level</option>
+                        <option ng-repeat="leveloption in userleveloption" value="{{leveloption.key}}" >{{leveloption.value}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" ng-show="newuser.level >= '4'">
+                <label for="company_name" class="col-sm-2 control-label">Select Company</label>
+                <div class="col-sm-10">
+                    <div class="panel panel-default panel-body">
+                        <div ng-repeat="company in newuser.companies">
+                            <ng-form name="form_{{$index}}">
+                                <div class="checkbox col-xs-4">
+                                    <label>
+                                        <input type="checkbox" name="company" id="company" ng-model="company.select" ng-checked="company.select" /> {{company.company_name}}
+                                    </label>
+                                </div>
+                            </ng-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="state" id="state" ng-model="newuser.state" /> Active Users
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" ng-disabled="newuser_form.$invalid" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> {{editpanel.button}}</button>
+                    <button type="button" class="btn btn-default" ng-click="closePanel();"><span class="glyphicon glyphicon-remove"></span> Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p>Users List</p>
+<div class="table-responsive">
+    <table id="table-user" class="table table-striped">
+        <tr>
+            <th>Fullname</th>
+            <th>Username</th>
+            <th class="text-center">Level</th>
+            <th class="text-center">Creation Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center"></th>
+        </tr>
+        <tr ng-repeat="user in users" >
+            <td>{{user.fullname}}</td>
+            <td>{{user.username}}</td>
+            <td class="text-center">{{user.level| level}}</td>
+            <td class="text-center">{{user.created_date}}</td>
+            <td class="text-center"><span class="btn btn-xs" ng-class='user.state | status' ng-click="changeState($index, user.username, user.state)"></span></td>
+            <td class="text-center"><span class="btn btn-xs glyphicon glyphicon-edit" ng-click="editUser($index)"></span> <span class="btn btn-xs glyphicon glyphicon-trash" ng-click="deleteUser($index, user.username)"></span></td>
+        </tr>
+    </table>
+</div>

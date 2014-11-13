@@ -1,0 +1,181 @@
+<div id="msg" class="alert text-uppercase" ng-class="[alert.classAlert, alert.active]" role="alert">{{alert.msgAlert}}</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Dashboard</h2>
+        <h4>List of Companies</h4>
+    </div>
+    <div class="col-sm-6 text-bottom">
+        <br/><br/>
+        <div class="text-right" ng-show="userlevel == 0">
+            <button type="button" class="btn btn-default" ng-click="newCompany()">
+                <span class="glyphicon glyphicon-plus"></span> New Company
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary" ng-show="showNewCompany">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{editpanel.tittle}}</h3>
+    </div>
+    <div class="panel-body">
+        <form name="newcompany_form" novalidate ng-submit="saveCompany(newcompany.company_id)" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="fullname" class="col-sm-2 control-label">Company Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name" ng-model="newcompany.company_name" ng-minlength=3 ng-maxlength=200 required />
+                    <div class="label label-danger" ng-show="newcompany_form.company_name.$dirty && newcompany_form.company_name.$invalid">
+                        <span ng-show="newcompany_form.company_name.$error.required">Your Company name is required.</span>
+                        <span ng-show="newcompany_form.company_name.$error.minlength">Your Company name is required to be at least 3 characters</span>
+                        <span ng-show="newcompany_form.company_name.$error.maxlength">Your Company name cannot be longer than 200 characters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="abn" class="col-sm-2 control-label">ABN</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="abn" id="abn" placeholder="ABN" ng-model="newcompany.abn" valid-number='number' required />
+                    <div class="label label-danger" ng-show="newcompany_form.abn.$dirty && newcompany_form.abn.$invalid">
+                        <span ng-show="newcompany_form.abn.$error.required">Your ABN is required.</span>
+                        <span ng-show="newcompany_form.abn.$error.number">That is not a number. Please input a valid number...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-sm-2 control-label">Address</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" id="address" placeholder="Address" ng-model="newcompany.address" ng-minlength=3 ng-maxlength=250 required />
+                    <div class="label label-danger" ng-show="newcompany_form.address.$dirty && newcompany_form.address.$invalid">
+                        <span ng-show="newcompany_form.address.$error.required">Your Address is required.</span>
+                        <span ng-show="newcompany_form.address.$error.minlength">Your Address is required to be at least 3 characters</span>
+                        <span ng-show="newcompany_form.address.$error.maxlength">Your Address cannot be longer than 250 characters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="suburb" class="col-sm-2 control-label">Suburb</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="suburb" id="suburb" placeholder="Suburb" ng-model="newcompany.suburb" ng-minlength=3 ng-maxlength=100 required />
+                    <div class="label label-danger" ng-show="newcompany_form.suburb.$dirty && newcompany_form.suburb.$invalid">
+                        <span ng-show="newcompany_form.suburb.$error.required">Your suburb is required.</span>
+                        <span ng-show="newcompany_form.suburb.$error.minlength">Your suburb is required to be at least 3 characters</span>
+                        <span ng-show="newcompany_form.suburb.$error.maxlength">Your suburb cannot be longer than 100 characters</span>
+                    </div>
+                </div>
+            </div>            
+            <div class="form-group">
+                <label for="postcode" class="col-sm-2 control-label">Postcode</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="postcode" id="postcode" placeholder="Postcode" ng-model="newcompany.postcode" valid-number='number' required />
+                    <div class="label label-danger" ng-show="newcompany_form.postcode.$dirty && newcompany_form.postcode.$invalid">
+                        <span ng-show="newcompany_form.postcode.$error.required">Your name is required.</span>
+                        <span ng-show="newcompany_form.postcode.$error.number">That is not a number. Please input a valid number...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="state" class="col-sm-2 control-label">State</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="state" id="state" placeholder="State" ng-model="newcompany.state" ng-minlength=3 ng-maxlength=5 required />
+                    <div class="label label-danger" ng-show="newcompany_form.state.$dirty && newcompany_form.state.$invalid">
+                        <span ng-show="newcompany_form.state.$error.required">Your name is required.</span>
+                        <span ng-show="newcompany_form.state.$error.minlength">Your name is required to be at least 3 characters</span>
+                        <span ng-show="newcompany_form.state.$error.maxlength">Your name cannot be longer than 5 characters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" ng-disabled="newcompany_form.$invalid" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> {{editpanel.button}}</button>
+                    <button type="button" class="btn btn-default" ng-click="closePanel();"><span class="glyphicon glyphicon-remove"></span> Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default" ng-repeat="company in companys">
+        <div class="panel-heading">
+            <h3 class="panel-title" >
+                <span data-toggle="collapse" data-parent="#accordion" data-target="#{{company.company_id}}">{{company.company_name}}</span>
+                <span class="btn btn-xs glyphicon glyphicon-trash" ng-click="deleteCompany(company.company_id, $index)" ng-show="userlevel == 0"></span>
+                <span class="btn btn-xs glyphicon glyphicon-edit" ng-click="editCompany($index)" ng-show="userlevel == 0"></span> 
+            </h3>
+        </div>
+        <div id="{{company.company_id}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <p><strong>ABN:</strong> {{company.abn}} - <strong>Address:</strong> {{company.abn}}, {{company.address}} {{company.postcode}} {{company.state}}</p>
+                <h4>Projects</h4>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="project in projects | filter:{company_id:company.company_id}">
+                        <a class="thumbnail">
+                            <form name="editproject_form{{$index}}" novalidate class="form-horizontal" role="form">
+                                <h2 ng-hide="edit" ng-click="selectProject(project.project_id)">{{project.project_name}}</h2>
+                                <div class="form-group" ng-show="edit">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="project_name" id="project_name" placeholder="Project Name" ng-model="project.project_name" ng-minlength=3 ng-maxlength=100 required />
+                                        <div class="label label-danger" ng-show="editproject_form{{$index}}.project_name.$dirty && editproject_form{{$index}}.project_name.$invalid">
+                                            <span ng-show="editproject_form{{$index}}.project_name.$error.required">Your Company name is required.</span>
+                                            <span ng-show="editproject_form{{$index}}.project_name.$error.minlength">Your Company name is required to be at least 3 characters</span>
+                                            <span ng-show="editproject_form{{$index}}.project_name.$error.maxlength">Your Company name cannot be longer than 100 characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p ng-hide="edit" ng-click="selectProject(project.project_id)">{{project.description}}</p>
+                                <div class="form-group" ng-show="edit">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="description" id="description" placeholder="Description" ng-model="project.description" ng-minlength=3 ng-maxlength=250 required />
+                                        <div class="label label-danger" ng-show="editproject_form{{$index}}.description.$dirty && editproject_form{{$index}}.description.$invalid">
+                                            <span ng-show="editproject_form{{$index}}.description.$error.required">Your Address is required.</span>
+                                            <span ng-show="editproject_form{{$index}}.description.$error.minlength">Your Address is required to be at least 3 characters</span>
+                                            <span ng-show="editproject_form{{$index}}.description.$error.maxlength">Your Address cannot be longer than 250 characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right" ng-show="userlevel == 0 || userlevel == 1 || userlevel == 4">
+                                    <span ng-show="edit">
+                                        <button type="button" ng-disabled="editproject_form{{$index}}.$invalid" class="btn btn-default" ng-click="saveEditProject(project.project_id, project.project_name, project.description)"><span class="glyphicon glyphicon-save"></span> SAVE</button>
+                                        <button type="button" class="btn btn-default" ng-click="edit=!edit"><span class="glyphicon glyphicon-remove"></span> Close</button>
+                                    </span>
+                                    <span class="btn btn-xs glyphicon glyphicon-edit" ng-click="edit=!edit" ng-hide="edit"></span><span class="btn btn-xs glyphicon glyphicon-trash" ng-click="deleteProject(project.project_id)" ng-hide="edit"></span>
+                                </div>
+                            </form>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3" ng-show="userlevel == 0 || userlevel == 1 || userlevel == 4">
+                        <div class="thumbnail">
+                            <form name="newproject_form{{$index}}" novalidate ng-submit="saveProject(company.company_id, $index)" class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="project_name" id="project_name" placeholder="Project Name" ng-model="company.newproject.project_name" ng-minlength=3 ng-maxlength=200 required />
+                                        <div class="label label-danger" ng-show="newproject_form{{$index}}.project_name.$dirty && newproject_form{{$index}}.project_name.$invalid && reset">
+                                            <span ng-show="newproject_form{{$index}}.project_name.$error.required">Your Company name is required.</span>
+                                            <span ng-show="newproject_form{{$index}}.project_name.$error.minlength">Your Company name is required to be at least 3 characters</span>
+                                            <span ng-show="newproject_form{{$index}}.project_name.$error.maxlength">Your Company name cannot be longer than 200 characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="description" id="description" placeholder="Description" ng-model="company.newproject.description" ng-minlength=3 ng-maxlength=250 required />
+                                        <div class="label label-danger" ng-show="newproject_form{{$index}}.description.$dirty && newproject_form{{$index}}.description.$invalid && reset">
+                                            <span ng-show="newproject_form{{$index}}.description.$error.required">Your Address is required.</span>
+                                            <span ng-show="newproject_form{{$index}}.description.$error.minlength">Your Address is required to be at least 3 characters</span>
+                                            <span ng-show="newproject_form{{$index}}.description.$error.maxlength">Your Address cannot be longer than 250 characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12 text-right">
+                                        <button type="submit" ng-disabled="newproject_form{{$index}}.$invalid" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> SAVE</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
