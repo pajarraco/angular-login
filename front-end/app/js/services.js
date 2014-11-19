@@ -5,7 +5,7 @@
 app.value('version', '0.2');
 
 app.factory('RestFul', ['$resource', function ($resource) {
-        return $resource('http://cwad.com.au/cw-web-form-dev/api/:jsonFile',
+        return $resource('api/:jsonFile',
                 {jsonFile: '@jsonFile'}, {
             get: {
                 method: 'GET',
@@ -53,7 +53,7 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService', function 
             },
             islogged: function () {
                 var auth_data = RestFul.post({
-                    jsonFile: 'login.json.php',
+                    jsonFile: 'login.json',
                     uid: sessionStorage.uid
                 }, function () {
                     if (auth_data[0] != 'authentified') {
@@ -71,7 +71,7 @@ app.factory('sessionService', ['RestFul', function (RestFul) {
             },
             destroy: function (key) {
                 var out_data = RestFul.delete({
-                    jsonFile: 'login.json.php',
+                    jsonFile: 'login.json',
                     uid: sessionStorage.uid
                 }, function () {
                     console.log('out_data:', out_data);

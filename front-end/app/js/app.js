@@ -24,7 +24,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                     views: {
                         '@': {
                             templateUrl: 'template/root/home.html',
-                            controller: 'HomeCtrl'
+                            controller: 'DashboardCtrl'
                         },
                         'dashboard@home': {
                             templateUrl: 'template/projects/dashboard.html',

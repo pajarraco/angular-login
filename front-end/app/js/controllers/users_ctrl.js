@@ -27,7 +27,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
 
         function getData(msg) {
             $scope.users = RestFul.get({
-                jsonFile: 'users.json.php'
+                jsonFile: 'users.json'
             }, function (data) {
                 if (msg !== '') {
                     $scope.closePanel();
@@ -35,7 +35,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
                     $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: msg};
                 } else {
                     $scope.companies = RestFul.get({
-                        jsonFile: 'company.json.php',
+                        jsonFile: 'company.json',
                         user_company_id: $scope.usercompanyid
                     }, function (data) {
                         $('#loader').hide();
@@ -98,7 +98,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
             if ($scope.editpanel.action == 'new') {
                 if ($scope.newuser.password != '') {
                     RestFul.post({
-                        jsonFile: 'users.json.php',
+                        jsonFile: 'users.json',
                         fullname: $scope.newuser.fullname,
                         username: $scope.newuser.username,
                         password: $scope.newuser.password,
@@ -118,7 +118,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
             } else {
                 if ($scope.newuser.password != '') {
                     RestFul.put({
-                        jsonFile: 'users.json.php',
+                        jsonFile: 'users.json',
                         type: 'full',
                         fullname: $scope.newuser.fullname,
                         username: $scope.newuser.username,
@@ -161,7 +161,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
                 $scope.users[index].state = '1';
             }
             RestFul.put({
-                jsonFile: 'users.json.php',
+                jsonFile: 'users.json',
                 type: 'state',
                 username: username,
                 state: state
@@ -178,7 +178,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
             if (confirm('You are goint to DELETE the User ' + username + '.\nAre you sure?')) {
                 $('#loader').show();
                 RestFul.delete({
-                    jsonFile: 'users.json.php',
+                    jsonFile: 'users.json',
                     username: username
                 }, function () {
                     $scope.users.splice(index, 1);
