@@ -16,26 +16,13 @@
 
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-
         <script src="lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-
+        <script src="lib/fastclick/lib/fastclick.js" type="text/javascript"></script>
 
         <script src="lib/angular/angular.min.js" type="text/javascript"></script>
         <script src="lib/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
-        <script src="lib/angular-animate/angular-animate.min.js" type="text/javascript"></script>
-        <script src="lib/angular-resource/angular-resource.min.js" type="text/javascript"></script>
-
-        <script src="lib/fastclick/lib/fastclick.js" type="text/javascript"></script>
 
         <script src="js/app.js" type="text/javascript"></script>
-        <script src="js/services.js" type="text/javascript"></script>
-        <script src="js/filters.js" type="text/javascript"></script>
-        <script src="js/directives.js" type="text/javascript"></script>
-        <script src="js/animations.js" type="text/javascript"></script>
-        <script src="js/controllers/login_ctrl.js" type="text/javascript"></script>
-        <script src="js/controllers/nav_ctrl.js" type="text/javascript"></script>
-        <script src="js/controllers/dashboard_ctrl.js" type="text/javascript"></script>
-        <script src="js/controllers/users_ctrl.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="loader">
@@ -60,10 +47,10 @@
             <div id="floatingTextG">Loading...</div>
         </div>
         <div ng-controller="NavCtrl">
-<!--            Navigator Bar -->
+            <!--            Navigator Bar -->
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container-fluid">
-<!--                    Brand and toggle get grouped for better mobile display -->
+                    <!--                    Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
                             <span class="sr-only">Toggle navigation</span>
@@ -77,12 +64,12 @@
                             </a>
                         </div>
                     </div>
-<!--                    Collect the nav links, forms, and other content for toggling -->
-                    <div ng-show="$location.path() != '/'">
+                    <!--                    Collect the nav links, forms, and other content for toggling -->
+                    <div ng-show="url != '/login'">
                         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                <li ng-class="{active: $location.path() == '/home'}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                                <li ng-class="{active: $location.path() == '/users'}" ng-show="userlevel == 0 || userlevel == 1 || userlevel == 4"><a ui-sref="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                                <li ng-class="{active: url == '/home'}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                                <li ng-class="{active: url == '/users'}"><a ui-sref="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
                                 <li ><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             </ul>
                         </div> 
@@ -101,5 +88,22 @@
                 </div>
             </footer>
         </div>
+        <script src="lib/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+        <script src="lib/angular-resource/angular-resource.min.js" type="text/javascript"></script>Ï
+        
+        <script src="page/root/services.js" type="text/javascript"></script>
+        <script src="page/root/directives.js" type="text/javascript"></script>
+        <script src="page/root/filters.js" type="text/javascript"></script>
+        <script src="page/root/animations.js" type="text/javascript"></script>
+        <script src="page/root/nav_ctrl.js" type="text/javascript"></script>
+        <script src="page/root/dashboard_ctrl.js" type="text/javascript"></script>
+        
+        <script src="page/login/session.js" type="text/javascript"></script>
+        <script src="page/login/services.js" type="text/javascript"></script>
+        <script src="page/login/directives.js" type="text/javascript"></script>
+        <script src="page/login/login_ctrl.js" type="text/javascript"></script>
+        
+        <script src="page/users/users_ctrl.js" type="text/javascript"></script>
+        <script src="page/users/directives.js" type="text/javascript"></script>
     </body>
 </html>

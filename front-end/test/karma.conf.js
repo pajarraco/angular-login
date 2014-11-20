@@ -9,25 +9,29 @@ module.exports = function (config) {
         basePath: '../',
         files: [
             'app/lib/angular/angular.js',
+            'app/lib/angular-ui-router/release/angular-ui-router.js',
+            'app/lib/angular-resource/angular-resource.js',
+            'app/lib/angular-animate/angular-animate.js',
             'app/lib/angular-mocks/angular-mocks.js',
             'app/js/**/*.js',
+            'app/page/**/*js',
             'test/test/**/*.js'
         ],
         plugins: [
             'karma-jasmine',
-            'karma-chrome-launcher',
-            'karma-html-reporter'
+            //'karma-firefox-launcher',
+            //'karma-opera-launcher',
+            //'karma-safari-launcher',
+            'karma-chrome-launcher'
         ],
-        exclude: [
-        ],
+        exclude: [],
         port: 8080,
-        autoWatch: true,
         frameworks: ['jasmine'],
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
         // enable / disable watching file and executing tests whenever any file changes
-
+        autoWatch: true,
         // Start these browsers, currently available:
         // - Chrome
         // - ChromeCanary
@@ -36,7 +40,12 @@ module.exports = function (config) {
         // - Safari (only Mac)
         // - PhantomJS
         // - IE (only Windows)
-        browsers: ['Chrome'],
+        browsers: [
+            //    'Firefox',
+            //    'Safari',
+            //    'Opera',
+            'Chrome'
+        ],
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
         singleRun: false
