@@ -2,11 +2,11 @@
 <!--[if lt IE 7]>      <html lang="en" ng-app="webForm" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="webForm" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="webForm" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="webForm" class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="cwApp" class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Web Form</title>
+        <title>CW - CMS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -65,12 +65,12 @@
                         </div>
                     </div>
                     <!--                    Collect the nav links, forms, and other content for toggling -->
-                    <div ng-show="url != '/login'">
+                    <div ng-if="url.path() != '/login'">
                         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                <li ng-class="{active: url == '/home'}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                                <li ng-class="{active: url == '/users'}"><a ui-sref="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
-                                <li ><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                <li ng-class="{active: url.path() == '/home'}"><a ui-sref="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                                <li ng-class="{active: url.path() == '/users'}"><a ui-sref="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                                <li ><a href="#" class="btn-logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             </ul>
                         </div> 
                     </div>
@@ -84,25 +84,26 @@
             <footer class="container-fluid ">
                 <div class="panel panel-default">
                     <div class="panel-body">Design By. Cooper & Westwood Advertising<br />
-                        Web Form App: v<span app-version></span></div>
+                        CW - CMS - App: v<span app-version></span></div>
                 </div>
             </footer>
         </div>
         <script src="lib/angular-animate/angular-animate.min.js" type="text/javascript"></script>
-        <script src="lib/angular-resource/angular-resource.min.js" type="text/javascript"></script>Ï
-        
+        <script src="lib/angular-resource/angular-resource.min.js" type="text/javascript"></script>
+
         <script src="page/root/services.js" type="text/javascript"></script>
         <script src="page/root/directives.js" type="text/javascript"></script>
         <script src="page/root/filters.js" type="text/javascript"></script>
         <script src="page/root/animations.js" type="text/javascript"></script>
         <script src="page/root/nav_ctrl.js" type="text/javascript"></script>
-        <script src="page/root/dashboard_ctrl.js" type="text/javascript"></script>
         
+        <script src="page/home/dashboard_ctrl.js" type="text/javascript"></script>
+
         <script src="page/login/session.js" type="text/javascript"></script>
         <script src="page/login/services.js" type="text/javascript"></script>
         <script src="page/login/directives.js" type="text/javascript"></script>
         <script src="page/login/login_ctrl.js" type="text/javascript"></script>
-        
+
         <script src="page/users/users_ctrl.js" type="text/javascript"></script>
         <script src="page/users/directives.js" type="text/javascript"></script>
     </body>

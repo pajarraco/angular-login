@@ -2,14 +2,8 @@
 
 /* Controllers */
 
-app.controller('NavCtrl', ['$scope', '$location', 'loginService', function ($scope, $location, loginService) {
+app.controller('NavCtrl', ['$scope', '$location', function ($scope, $location) {
 
-        $scope.url = $location.path();
-        
-        console.log('$scope.url', $scope.url);
-        
-        $scope.logout = function () {
-            loginService.logout();
-        };
+        $scope.url = $location;
 
     }]);

@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 
-var app = angular.module('webForm', ['ui.router', 'ngAnimate', 'ngResource']);
+var app = angular.module('cwApp', ['ui.router', 'ngAnimate', 'ngResource']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -21,7 +21,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 })
                 .state('home', {
                     url: '/home',
-                    templateUrl: 'page/root/dashboard.html',
+                    templateUrl: 'page/home/dashboard.html',
                     controller: 'DashboardCtrl'
                 })
                 ;

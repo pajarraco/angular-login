@@ -1,38 +1,40 @@
 <div id="msg" class="alert text-uppercase" ng-class="[alert.classAlert, alert.active]" role="alert">{{alert.msgAlert}}</div>
-<div id="login_panel" class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Login</h3>
-    </div>
-    <div class="panel-body">
-        <form name="login_form" novalidate ng-submit="loginForm(login)" class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="username" class="col-sm-2 control-label">Username</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" name="username" id="username" placeholder="Email" ng-model="login.username"  ng-minlength=3 ng-maxlength=200 required />
-                    <div class="label label-danger" ng-show="login_form.username.$dirty && login_form.username.$invalid">
-                        <span ng-show="login_form.username.$error.required">Your name is required.</span>
-                        <span ng-show="login_form.username.$error.email">That is not a valid email. Please input a valid email.</span>
-                        <span ng-show="login_form.username.$error.minlength">Your name is required to be at least 3 characters</span>
-                        <span ng-show="login_form.username.$error.maxlength">Your name cannot be longer than 200 characters</span>
+<div class="col-sm-6 col-sm-offset-3">
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h3 class="panel-title">Login</h3>
+        </div>
+        <div class="panel-body">
+            <form name="login_form" novalidate ng-submit="loginForm(login)" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">Username</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="username" id="username" placeholder="Email" ng-model="login.username"  ng-minlength=3 ng-maxlength=200 required />
+                        <div class="label label-danger" ng-show="login_form.username.$dirty && login_form.username.$invalid">
+                            <span ng-show="login_form.username.$error.required">Your name is required.</span>
+                            <span ng-show="login_form.username.$error.email">That is not a valid email. Please input a valid email.</span>
+                            <span ng-show="login_form.username.$error.minlength">Your name is required to be at least 3 characters</span>
+                            <span ng-show="login_form.username.$error.maxlength">Your name cannot be longer than 200 characters</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" ng-model="login.password" ng-minlength=6 ng-maxlength=15 required/>
-                    <div class="label label-danger" ng-show="login_form.password.$dirty && login_form.password.$invalid">
-                        <span ng-show="login_form.password.$error.required">Your name is required.</span>
-                        <span ng-show="login_form.password.$error.minlength">Your name is required to be at least 6 characters</span>
-                        <span ng-show="login_form.password.$error.maxlength">Your name cannot be longer than 15 characters</span>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" ng-model="login.password" ng-minlength=6 ng-maxlength=15 required/>
+                        <div class="label label-danger" ng-show="login_form.password.$dirty && login_form.password.$invalid">
+                            <span ng-show="login_form.password.$error.required">Your name is required.</span>
+                            <span ng-show="login_form.password.$error.minlength">Your name is required to be at least 6 characters</span>
+                            <span ng-show="login_form.password.$error.maxlength">Your name cannot be longer than 15 characters</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" ng-disabled="login_form.$invalid" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Enter</button>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" ng-disabled="login_form.$invalid" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Enter</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

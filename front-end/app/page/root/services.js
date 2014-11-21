@@ -2,7 +2,7 @@
 
 /* Services */
 
-app.value('version', '0.2');
+app.value('version', '0.3');
 
 app.factory('RestFul', ['$resource', function ($resource) {
         return $resource('api/:jsonFile',

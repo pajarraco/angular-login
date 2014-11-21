@@ -21,10 +21,6 @@ footer{
 .alert{
     display: none;
 }
-#login_panel{
-    width: 50%;
-    margin: auto;
-}
 .panel-title .btn{
     margin-top: -3px;
     float: right;
@@ -320,28 +316,3 @@ footer{
 }
 /* End Loader */
 
-/* upload image */
-
-.nv-file-over { 
-    border: dotted 2px red; 
-} /* Default class applied to drop zones on over */
-
-.another-file-over-class { 
-    border: dotted 3px green; 
-}
-
-canvas {
-    background-color: #f3f3f3;
-    -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
-    -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
-    box-shadow: 3px 3px 3px 0 #e3e3e3;
-    border: 1px solid #c3c3c3;
-    height: 100px;
-    margin: 6px 0 0 6px;
-}
-
-.img-thumbnail{
-    margin-right: 5px;
-    margin-bottom: 5px;
-}
-/* end upload image */

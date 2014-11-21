@@ -6,12 +6,12 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService', function 
         return{
             login: function (login) {
                 // TODO login functions
-                var data = RestFul.get({
+                RestFul.get({
                     jsonFile: 'login.json',
                     type: 'login',
                     username: login.username,
                     password: login.password
-                }, function () {
+                }, function (data) {
                     if ((data[0] !== 'logout') && (data.length > 1)) {
                         sessionService.set('uid', data[0]);
                         sessionService.set('authkey', data[1]);
@@ -21,6 +21,8 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService', function 
                     } else {
                         $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'incorrect information'};
                     }
+                }, function(err){
+                    throw err;
                 });
             },
             logout: function () {

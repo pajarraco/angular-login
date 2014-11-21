@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/app/page/root/services.js</file>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/test/test/root.js</file>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/test/karma.conf.js</file>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/app/page/root/nav_ctrl.js</file>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/test/test/login.js</file>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/app/page/login/login_ctrl.js</file>
+            <file>file:/Users/Ernesto/Ernesto/Projects/angular-login/front-end/app/page/login/session.js</file>
+        </group>
     </open-files>
 </project-private>
