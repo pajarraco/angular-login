@@ -16,7 +16,6 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService', function 
                         sessionService.set('uid', data[0]);
                         sessionService.set('authkey', data[1]);
                         sessionService.set('level', data[2]);
-                        sessionService.set('company_id', data[3]);
                         $location.path('home');
                     } else {
                         $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'incorrect information'};
