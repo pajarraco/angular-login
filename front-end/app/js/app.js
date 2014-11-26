@@ -27,6 +27,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 ;
     }]);
 
-app.value('version', '0.3');
+app.value('version', '0.1');
 app.value('apiAuthKey', 'fdkgjsdt8guvn458uv458794g5vgv5vh');
 
