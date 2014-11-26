@@ -9,42 +9,33 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
         $scope.userlevel = sessionStorage.level;
         $scope.userleveloption = UserLevel.getLevels();
 
-        function getData(msg) {
-            $scope.users = RestFul.get({
-                jsonFile: 'users.json',
-                type: 'all'
-            }, function (data) {
-                if (msg !== '') {
-                    $scope.closePanel();
-                    $('#loader').hide();
-                    $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: msg};
-                } else {
-                    $('#loader').hide();
-                }
-            }, function () {
-                $('#loader').hide();
-                $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Reading Users, Try Again'};
-            });
-        }
-        getData('');
+        $scope.users = RestFul.get({
+            jsonFile: 'users.json',
+            type: 'all'
+        }, function () {
+            $('#loader').hide();
+        }, function () {
+            $('#loader').hide();
+            $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Reading Users, Try Again'};
+        });
 
         $scope.newUser = function () {
-            $scope.showNewUser = true;
-            $scope.newuser = [];   
+            $scope.newuser = [];
             $scope.newuser.password = '';
             $scope.newuser_form.$setPristine();
             $scope.editpanel = {tittle: 'New User', button: 'Add New', action: 'new', usernameclass: ''};
+            $scope.showNewUser = true;
         };
 
         $scope.editUser = function (index) {
-            $scope.showNewUser = true;
-            $scope.editpanel = {tittle: 'Edit User', button: 'Save', action: 'edit', usernameclass: 'disabled'};
             $scope.newuser = $scope.users[index];
-            if (($scope.newuser.status) == 1) {
+            if (($scope.newuser.status) === '1') {
                 $scope.newuser.status = true;
             }
             $scope.newuser.password = '';
             $scope.newuser.repassword = '';
+            $scope.editpanel = {tittle: 'Edit User', button: 'Save', action: 'edit', usernameclass: 'disabled'};
+            $scope.showNewUser = true;
         };
 
         $scope.closePanel = function () {
@@ -59,10 +50,9 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
             if ($scope.newuser.status) {
                 status = 1;
             }
-         
-            if ($scope.editpanel.action == 'new') {
-                if ($scope.newuser.password != '') {
-                    RestFul.post({
+            if ($scope.editpanel.action === 'new') {
+                if ($scope.newuser.password !== '') {
+                    $scope.users = RestFul.post({
                         jsonFile: 'users.json',
                         fullname: $scope.newuser.fullname,
                         username: $scope.newuser.username,
@@ -70,8 +60,9 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
                         level: $scope.newuser.level,
                         status: status
                     }, function (data) {
-                        console.log(data);
-                        getData('New User Create');
+                        console.log('data: ', data);
+                        $('#loader').hide();
+                        $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: 'User created'};
                     }, function () {
                         $('#loader').hide();
                         $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Creating New User, Try Again'};
@@ -81,8 +72,8 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
                     $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'Password Missing'};
                 }
             } else {
-                if ($scope.newuser.password != '') {
-                    RestFul.put({
+                if ($scope.newuser.password !== '') {
+                    $scope.users = RestFul.put({
                         jsonFile: 'users.json',
                         type: 'full',
                         fullname: $scope.newuser.fullname,
@@ -91,13 +82,14 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
                         level: $scope.newuser.level,
                         status: status
                     }, function () {
-                        getData('User Saved');
+                        $('#loader').hide();
+                        $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: 'User Saved'};
                     }, function () {
                         $('#loader').hide();
                         $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Saving User, Try Again'};
                     });
                 } else {
-                    RestFul.put({
+                    $scope.users = RestFul.put({
                         jsonFile: 'users.json',
                         type: 'nopassword',
                         fullname: $scope.newuser.fullname,
@@ -105,7 +97,8 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
                         level: $scope.newuser.level,
                         status: status
                     }, function () {
-                        getData('User Saved');
+                        $('#loader').hide();
+                        $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: 'User Saved'};
                     }, function () {
                         $('#loader').hide();
                         $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Saving User, Try Again'};
@@ -116,11 +109,11 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
 
         $scope.changeStatus = function (index, username, status) {
             $('#loader').show();
-            if (status == 1) {
-                status = 0
+            if (status === '1') {
+                status = 0;
                 $scope.users[index].status = '0';
             } else {
-                status = 1
+                status = 1;
                 $scope.users[index].status = '1';
             }
             RestFul.put({
@@ -128,7 +121,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
                 type: 'status',
                 username: username,
                 status: status
-            }, function (data) {
+            }, function () {
                 $('#loader').hide();
                 $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: 'Status Changed'};
             }, function () {

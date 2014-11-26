@@ -17,7 +17,7 @@ if (isset($method)) {
     $users->table = 'users';
     $users->get_table = 'users';
     $users->get_data = array('username', 'fullname', 'level', 'status', 'created_date');
-    $users->norequest = true;
+    $users->norequest = false;
     $level = 0;
 
     switch ($method) {
@@ -53,7 +53,8 @@ if (isset($method)) {
             }
             $data = array(array('fullname' => $input_data['fullname'], 'username' => $input_data['username'], 'password' => md5($input_data['password']), 'level' => $input_data['level'], 'status' => $input_data['status'], 'key' => ''));
             $users->data = $data;
-            $users->createRequest();
+            $user_array = $users->createRequest();
+            echo json_encode($user_array);
             break;
 
         case 'PUT':
@@ -63,6 +64,7 @@ if (isset($method)) {
             switch ($input_data['type']) {
                 case 'status':
                     $data = array(array('status' => $input_data['status']));
+                    $users->norequest = true;
                     break;
                 case 'nopassword':
                     $data = array(array('fullname' => $input_data['fullname'], 'level' => $input_data['level'], 'status' => $input_data['status']));
@@ -75,7 +77,12 @@ if (isset($method)) {
                 $users->data = $data;
                 $users->id_key = 'username';
                 $users->id_value = $input_data['username'];
-                $users->updateRequest();
+                if (!$users->norequest) {
+                    $user_array = $users->updateRequest();
+                    echo json_encode($user_array);
+                } else {
+                    $users->updateRequest();
+                }
             }
             break;
 
@@ -86,6 +93,7 @@ if (isset($method)) {
             if ((isset($_GET['username'])) && ($_GET['username'] != '')) {
                 $users->id_key = 'username';
                 $users->id_value = $_GET['username'];
+                $users->norequest = true;
                 $users->deleteRequest();
             }
             break;
