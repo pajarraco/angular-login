@@ -2,10 +2,10 @@
 
 /* Controllers */
 
-app.controller('LoginCtrl', ['$scope', 'loginService', function ($scope, loginService) {
-
+app.controller('LoginCtrl', ['$scope', 'loginService', function ($scope, loginService) {   
         $scope.loginForm = function () {
-            loginService.login($scope.login);
+            if (!loginService.login($scope.login)) {
+                $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'incorrect information'};
+            }
         };
-
     }]);

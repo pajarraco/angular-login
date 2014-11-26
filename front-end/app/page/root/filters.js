@@ -16,18 +16,9 @@ app.filter('level', [function() {
                     text_level = 'Administrator';
                     break;
                 case '1':
-                    text_level = 'Sales';
+                    text_level = 'Publisher';
                     break;
                 case '2':
-                    text_level = 'Designer';
-                    break;
-                case '3':
-                    text_level = 'Developer';
-                    break;
-                case '4':
-                    text_level = 'Client Administrator';
-                    break;
-                case '5':
                     text_level = 'Client';
                     break;
                 default:
@@ -38,8 +29,8 @@ app.filter('level', [function() {
     }]);
 
 app.filter('status', [function() {
-        return function(state) {
-            if (state == '1') {
+        return function(status) {
+            if (status === '1') {
                 return 'glyphicon glyphicon-ok';
             } else {
                 return 'glyphicon glyphicon-remove';

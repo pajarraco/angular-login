@@ -73,27 +73,11 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-show="newuser.level >= '4'">
-                <label for="company_name" class="col-sm-2 control-label">Select Company</label>
-                <div class="col-sm-10">
-                    <div class="panel panel-default panel-body">
-                        <div ng-repeat="company in newuser.companies">
-                            <ng-form name="form_{{$index}}">
-                                <div class="checkbox col-xs-4">
-                                    <label>
-                                        <input type="checkbox" name="company" id="company" ng-model="company.select" ng-checked="company.select" /> {{company.company_name}}
-                                    </label>
-                                </div>
-                            </ng-form>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="state" id="state" ng-model="newuser.state" /> Active Users
+                            <input type="checkbox" name="status" id="status" ng-model="newuser.status" /> Active Users
                         </label>
                     </div>
                 </div>
@@ -124,7 +108,7 @@
             <td>{{user.username}}</td>
             <td class="text-center">{{user.level| level}}</td>
             <td class="text-center">{{user.created_date}}</td>
-            <td class="text-center"><span class="btn btn-xs" ng-class='user.state | status' ng-click="changeState($index, user.username, user.state)"></span></td>
+            <td class="text-center"><span class="btn btn-xs" ng-class='user.status | status' ng-click="changeStatus($index, user.username, user.status)"></span></td>
             <td class="text-center"><span class="btn btn-xs glyphicon glyphicon-edit" ng-click="editUser($index)"></span> <span class="btn btn-xs glyphicon glyphicon-trash" ng-click="deleteUser($index, user.username)"></span></td>
         </tr>
     </table>

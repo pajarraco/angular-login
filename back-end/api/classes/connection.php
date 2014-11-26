@@ -14,9 +14,9 @@
 class Connection {//create a class for make connection
 
 	var $host = "localhost";
-	var $username = "xxxx";// specify the sever details for mysql
-	Var $password = "xxxx";
-	var $database = "xxx";
+	var $username = "cwcmsadmin";// specify the sever details for mysql
+	Var $password = "n9DvGXwb3Hy8Ef7j";
+	var $database = "cw-cms";
 	var $myconn;
 
 	function connectToDatabase() {// create a function for connect database

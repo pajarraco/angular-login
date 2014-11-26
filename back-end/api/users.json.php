@@ -3,10 +3,10 @@
 include 'classes/auth_key.php';
 header('Content-Type: application/json');
 
-$user_level = new Auth_Key();
-$level = $user_level->getLevel();
-if ($level == 'Auth-Key is not valid') {
-    die(json_encode(array($level)));
+$site = new Auth_Key();
+$auth_site = $site->getAuth();
+if (!$auth_site) {
+    die(json_encode(array('Auth-Key is not valid')));
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -16,28 +16,30 @@ if (isset($method)) {
     $users = new Request();
     $users->table = 'users';
     $users->get_table = 'users';
-    $users->get_data = array('username', 'company_id', 'fullname', 'level', 'state', 'created_date');
+    $users->get_data = array('username', 'fullname', 'level', 'status', 'created_date');
     $users->norequest = true;
+    $level = 0;
 
     switch ($method) {
         case 'GET':
             switch ($_GET['type']) {
                 case 'unique':
-                    $data = array(array(username => $_GET['username']));
+                    $data = array(array('username' => $_GET['username']));
                     $users->get_data = array('username');
                     break;
-                
+
                 case 'content':
-                    $data = array(array(level => '0'), array(conector => 'OR'), array(level => '1'), array(conector => 'OR'), array(level => '2'), array(conector => 'OR'), array(level => '3'), array(conector => 'OR'), array(company_id => $_GET['company_id']));
+                    $data = array(array('level' => '0'), array('conector' => 'OR'), array('level' => '1'), array('conector' => 'OR'), array('level' => '2'), array('conector' => 'OR'), array('level' => '3'));
                     $users->get_data = array('username', 'fullname');
                     break;
 
-                default:
+                case 'all':
                     if ($level > 1) {
-                        $data = array(array(level => '4'), array(conector => 'OR'), array(level => '5'));
+                        $data = array(array('level' => '4'), array('conector' => 'OR'), array('level' => '5'));
                     } else {
                         $data = '';
                     }
+                default:
                     break;
             }
             $users->data = $data;
@@ -49,16 +51,7 @@ if (isset($method)) {
             if (($level > 1) && ($level != 4)) {
                 break;
             }
-            if (is_array($input_data['company_id'])) {
-                $company_id = '';
-                foreach ($input_data['company_id'] as $value) {
-                    $company_id .= $value['company_id'] . ',';
-                }
-                $company_id = rtrim($company_id, ',');
-            } else {
-                $company_id = $input_data['company_id'];
-            }
-            $data = array(array(company_id => $company_id, fullname => $input_data['fullname'], username => $input_data['username'], password => md5($input_data['password']), level => $input_data['level'], state => $input_data['state'], key => ''));
+            $data = array(array('fullname' => $input_data['fullname'], 'username' => $input_data['username'], 'password' => md5($input_data['password']), 'level' => $input_data['level'], 'status' => $input_data['status'], 'key' => ''));
             $users->data = $data;
             $users->createRequest();
             break;
@@ -67,26 +60,15 @@ if (isset($method)) {
             if (($level > 1) && ($level != 4)) {
                 break;
             }
-
-            if (is_array($input_data['company_id'])) {
-                $company_id = '';
-                foreach ($input_data['company_id'] as $value) {
-                    $company_id .= $value['company_id'] . ',';
-                }
-                $company_id = rtrim($company_id, ',');
-            } else {
-                $company_id = $input_data['company_id'];
-            }
-
             switch ($input_data['type']) {
-                case 'state':
-                    $data = array(array(state => $input_data['state']));
+                case 'status':
+                    $data = array(array('status' => $input_data['status']));
                     break;
                 case 'nopassword':
-                    $data = array(array(company_id => $company_id, fullname => $input_data['fullname'], level => $input_data['level'], state => $input_data['state']));
+                    $data = array(array('fullname' => $input_data['fullname'], 'level' => $input_data['level'], 'status' => $input_data['status']));
                     break;
                 case 'full':
-                    $data = array(array(company_id => $company_id, fullname => $input_data['fullname'], password => md5($input_data['password']), level => $input_data['level'], state => $input_data['state']));
+                    $data = array(array('fullname' => $input_data['fullname'], 'password' => md5($input_data['password']), 'level' => $input_data['level'], 'status' => $input_data['status']));
                     break;
             }
             if ((isset($input_data['username'])) && ($input_data['username'] != '')) {

@@ -14,23 +14,25 @@ include 'request.php';
  */
 class Auth_Key { //create a class for make connection 
 
-    function getLevel() { // create a function for connect database
+    function getAuth() { // create a function for connect database
+        $auth = false;
         $headers = apache_request_headers();
-        $users = new Request();
-        $users->get_table = 'users';
-        $users->data = array(array(key => $headers['Auth-Key']));
-        $users->get_data = array('`key`', '`level`');
-        $user_key = $users->selectRequest();
+        if (isset($headers['Auth-Key'])) {
+            $site = $_SERVER['SERVER_NAME'];
+            $users = new Request();
+            $users->get_table = 'site';
+            $users->data = array(array('key' => $headers['Auth-Key']), array('conector' => 'AND'), array('site' => $site));
+            $users->get_data = array('`key`');
+            $user_key = $users->selectRequest();
 
-
-        //$user_level = ' 675675 ';
-
-        if ($user_key[0]['key'] == '') {
-            $user_level = 'Auth-Key is not valid';
-        } else {
-            $user_level = $user_key[0]['level'];
+            if (is_array($user_key) && (!empty($user_key))) {
+                if ($user_key[0]['key'] != '') {
+                    $auth = true;
+                }
+            }
         }
-        return $user_level;
+
+        return $auth;
     }
 
 }

@@ -8,7 +8,8 @@ include ('connection.php');
  * @author Ernesto La Fontaine
  */
 class Request {
-
+    
+    private $pre = '';
     private $connection;
     public $table = '';
     public $get_table = '';
@@ -56,7 +57,7 @@ class Request {
                 $orderby = 'ORDER BY ' . $this->orderby;
             }
             //echo "SELECT {$get_str} FROM `wf_{$get_table}` {$data_query} {$orderby};";
-            $request_query = mysql_query("SELECT {$get_str} FROM `wf_{$get_table}` {$data_query} {$orderby};") or die("Error: " . mysql_error());
+            $request_query = mysql_query("SELECT {$get_str} FROM `{$this->pre}{$get_table}` {$data_query} {$orderby};") or die("Error: " . mysql_error());
             $request_array = array();
             while ($request_row = mysql_fetch_assoc($request_query)) {
                 $request_array[] = $request_row;
@@ -91,7 +92,7 @@ class Request {
 
             $data_query = "(" . $data_query_key . ") VALUES " . $data_query_values . ")";
         }
-        $request_insert = mysql_query("INSERT INTO `wf_{$table}` {$data_query} ;") or die("Error: " . mysql_error());
+        $request_insert = mysql_query("INSERT INTO `{$this->pre}{$table}` {$data_query} ;") or die("Error: " . mysql_error());
         $this->data = '';
         if (!$this->norequest) {
             return $this->selectRequest();
@@ -127,7 +128,7 @@ class Request {
             }
             $data_query = " SET " . $data_query . " WHERE " . $id_data_query;
         }
-        $request_update = mysql_query("UPDATE `wf_{$table}` {$data_query} ;") or die("Error: " . mysql_error());
+        $request_update = mysql_query("UPDATE `{$this->pre}{$table}` {$data_query} ;") or die("Error: " . mysql_error());
         $this->data = '';
         if (!$this->norequest) {
             return $this->selectRequest();
@@ -148,7 +149,7 @@ class Request {
         } else {
             $data_query = "`{$id}` = '{$id_value}'";
         }
-        $request_delete = mysql_query("DELETE FROM `wf_{$table}` WHERE {$data_query} ;") or die("Error: " . mysql_error());
+        $request_delete = mysql_query("DELETE FROM `{$this->pre}{$table}` WHERE {$data_query} ;") or die("Error: " . mysql_error());
         if (!$this->norequest) {
             return $this->selectRequest();
         }

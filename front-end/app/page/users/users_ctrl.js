@@ -2,51 +2,26 @@
 
 /* Controllers */
 
-app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, RestFul, $filter) {
+app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', function ($scope, RestFul, $filter, UserLevel) {
 
         $('#loader').show();
 
         $scope.userlevel = sessionStorage.level;
-        $scope.usercompanyid = sessionStorage.company_id;
-
-        if ($scope.userlevel != '4') {
-            $scope.userleveloption = [
-                {key: 0, value: 'Administrator'},
-                {key: 1, value: 'Sales'},
-                {key: 2, value: 'Designer'},
-                {key: 3, value: 'Developer'},
-                {key: 4, value: 'Client Administrator'},
-                {key: 5, value: 'Client'}
-            ];
-        } else {
-            $scope.userleveloption = [
-                {key: 4, value: 'Client Administrator'},
-                {key: 5, value: 'Client'}
-            ];
-        }
+        $scope.userleveloption = UserLevel.getLevels();
 
         function getData(msg) {
             $scope.users = RestFul.get({
-                jsonFile: 'users.json'
+                jsonFile: 'users.json',
+                type: 'all'
             }, function (data) {
                 if (msg !== '') {
                     $scope.closePanel();
                     $('#loader').hide();
                     $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: msg};
                 } else {
-                    $scope.companies = RestFul.get({
-                        jsonFile: 'company.json',
-                        user_company_id: $scope.usercompanyid
-                    }, function (data) {
-                        $('#loader').hide();
-                        //console.log('$scope.users: ', $scope.users);
-                        //console.log('$scope.companies: ', $scope.companies);
-                    }, function (error) {
-                        $('#loader').hide();
-                        $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Reading Companies, Try Again'};
-                    });
+                    $('#loader').hide();
                 }
-            }, function (error) {
+            }, function () {
                 $('#loader').hide();
                 $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Reading Users, Try Again'};
             });
@@ -55,8 +30,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
 
         $scope.newUser = function () {
             $scope.showNewUser = true;
-            $scope.newuser = [];
-            $scope.newuser.companies = $scope.companies;
+            $scope.newuser = [];   
             $scope.newuser.password = '';
             $scope.newuser_form.$setPristine();
             $scope.editpanel = {tittle: 'New User', button: 'Add New', action: 'new', usernameclass: ''};
@@ -66,35 +40,26 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
             $scope.showNewUser = true;
             $scope.editpanel = {tittle: 'Edit User', button: 'Save', action: 'edit', usernameclass: 'disabled'};
             $scope.newuser = $scope.users[index];
-            if (($scope.newuser.state) == 1) {
-                $scope.newuser.state = true;
+            if (($scope.newuser.status) == 1) {
+                $scope.newuser.status = true;
             }
             $scope.newuser.password = '';
             $scope.newuser.repassword = '';
-            $scope.newuser.companies = $scope.companies;
-            angular.forEach($scope.newuser.companies, function (value, key) {
-                if ($scope.newuser.company_id.indexOf(value.company_id) > -1) {
-                    $scope.newuser.companies[key].select = true;
-                } else {
-                    $scope.newuser.companies[key].select = false;
-                }
-            });
         };
 
         $scope.closePanel = function () {
             $scope.showNewUser = false;
             $scope.newuser = [];
-            $scope.newuser.companies = $scope.companies;
             $scope.newuser_form.$setPristine();
         };
 
         $scope.saveUser = function () {
             $('#loader').show();
-            var state = 0;
-            if ($scope.newuser.state) {
-                state = 1;
+            var status = 0;
+            if ($scope.newuser.status) {
+                status = 1;
             }
-            $scope.user_company = $filter('filter')($scope.newuser.companies, {select: true});
+         
             if ($scope.editpanel.action == 'new') {
                 if ($scope.newuser.password != '') {
                     RestFul.post({
@@ -103,9 +68,9 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
                         username: $scope.newuser.username,
                         password: $scope.newuser.password,
                         level: $scope.newuser.level,
-                        state: state,
-                        company_id: $scope.user_company
-                    }, function () {
+                        status: status
+                    }, function (data) {
+                        console.log(data);
                         getData('New User Create');
                     }, function () {
                         $('#loader').hide();
@@ -124,8 +89,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
                         username: $scope.newuser.username,
                         password: $scope.newuser.password,
                         level: $scope.newuser.level,
-                        state: state,
-                        company_id: $scope.user_company
+                        status: status
                     }, function () {
                         getData('User Saved');
                     }, function () {
@@ -134,13 +98,12 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
                     });
                 } else {
                     RestFul.put({
-                        jsonFile: 'users.json.php',
+                        jsonFile: 'users.json',
                         type: 'nopassword',
                         fullname: $scope.newuser.fullname,
                         username: $scope.newuser.username,
                         level: $scope.newuser.level,
-                        state: state,
-                        company_id: $scope.user_company
+                        status: status
                     }, function () {
                         getData('User Saved');
                     }, function () {
@@ -151,21 +114,21 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', function ($scope, R
             }
         };
 
-        $scope.changeState = function (index, username, state) {
+        $scope.changeStatus = function (index, username, status) {
             $('#loader').show();
-            if (state == 1) {
-                state = 0
-                $scope.users[index].state = '0';
+            if (status == 1) {
+                status = 0
+                $scope.users[index].status = '0';
             } else {
-                state = 1
-                $scope.users[index].state = '1';
+                status = 1
+                $scope.users[index].status = '1';
             }
             RestFul.put({
                 jsonFile: 'users.json',
-                type: 'state',
+                type: 'status',
                 username: username,
-                state: state
-            }, function () {
+                status: status
+            }, function (data) {
                 $('#loader').hide();
                 $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: 'Status Changed'};
             }, function () {

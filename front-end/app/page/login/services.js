@@ -5,7 +5,6 @@
 app.factory('loginService', ['RestFul', '$location', 'sessionService', function (RestFul, $location, sessionService) {
         return{
             login: function (login) {
-                // TODO login functions
                 RestFul.get({
                     jsonFile: 'login.json',
                     type: 'login',
@@ -17,11 +16,13 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService', function 
                         sessionService.set('authkey', data[1]);
                         sessionService.set('level', data[2]);
                         $location.path('home');
+                        return true;
                     } else {
-                        $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'incorrect information'};
+                        return false;
                     }
-                }, function(err){
+                }, function (err) {
                     throw err;
+                    return false;
                 });
             },
             logout: function () {
@@ -29,16 +30,20 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService', function 
                 $location.path('login');
             },
             islogged: function () {
-                RestFul.get({
-                    jsonFile: 'login.json',
-                    uid: sessionStorage.uid
-                }, function (auth_data) {
-                    if (auth_data[0] !== 'authentified') {
+                if (angular.isDefined(sessionStorage.uid)) {
+                    RestFul.post({
+                        jsonFile: 'login.json',
+                        uid: sessionStorage.uid
+                    }, function (auth_data) {
+                        if (auth_data[0] !== 'authentified') {
+                            $location.path('login');
+                        }
+                    }, function () {
                         $location.path('login');
-                    }
-                }, function () {
+                    });
+                } else {
                     $location.path('login');
-                });
+                }
             }
         };
     }]);
@@ -54,9 +59,9 @@ app.factory('sessionService', ['RestFul', function (RestFul) {
                     uid: sessionStorage.uid
                 }, function () {
                     sessionStorage.removeItem('uid');
+                    sessionStorage.removeItem('authkey');
                     sessionStorage.removeItem('level');
                 });
-                return sessionStorage;
             }
         };
     }]);
