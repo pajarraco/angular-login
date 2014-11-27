@@ -17,21 +17,22 @@ class Auth_Key { //create a class for make connection
     function getAuth() { // create a function for connect database
         $auth = false;
         $headers = apache_request_headers();
-        if (isset($headers['Auth-Key'])) {
-            $site = $_SERVER['SERVER_NAME'];
-            $users = new Request();
-            $users->get_table = 'site';
-            $users->data = array(array('key' => $headers['Auth-Key']), array('conector' => 'AND'), array('site' => $site));
-            $users->get_data = array('`key`');
-            $user_key = $users->selectRequest();
-
-            if (is_array($user_key) && (!empty($user_key))) {
-                if ($user_key[0]['key'] != '') {
+        if ((isset($headers['Auth-Key'])) && (isset($_GET['access_token']))) {
+            $authReq = new Request();
+            $authReq->get_table = 'site';
+            $authReq->data = array(array('key' => $headers['Auth-Key']));
+            $authReq->get_data = array('`key`');
+            $site_key = $authReq->selectRequest();
+            $authReq->get_table = 'users';
+            $authReq->data = array(array('key' => $_GET['access_token']));
+            $authReq->get_data = array('`key`');
+            $user_key = $authReq->selectRequest();
+            if ((is_array($user_key)) && (!empty($user_key)) && (is_array($site_key)) && (!empty($site_key))) {
+                if (($user_key[0]['key'] != '') && ($site_key[0]['key'] != '')) {
                     $auth = true;
                 }
             }
         }
-
         return $auth;
     }
 

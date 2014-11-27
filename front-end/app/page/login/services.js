@@ -2,7 +2,8 @@
 
 /* Services */
 
-app.factory('loginService', ['RestFul', '$location', 'sessionService', function (RestFul, $location, sessionService) {
+app.factory('loginService', ['RestFul', '$location', 'sessionService',
+    function (RestFul, $location, sessionService) {
         return{
             login: function (login) {
                 RestFul.get({

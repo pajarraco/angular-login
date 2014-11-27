@@ -3,7 +3,7 @@
 /* Services */
 
 app.factory('RestFul', ['$resource', 'apiAuthKey', function ($resource, apiAuthKey) {
-        return $resource('http://localhost/cw-cms-api/api/:jsonFile' + '.php',
+        var res = $resource('http://localhost/cw-cms-api/api/:jsonFile' + '.php',
                 {jsonFile: '@jsonFile'}, {
             get: {
                 method: 'GET',
@@ -34,11 +34,15 @@ app.factory('RestFul', ['$resource', 'apiAuthKey', function ($resource, apiAuthK
                 timeout: 4000
             },
             test: {
-                method: 'POST',
+                method: 'GET',
                 headers: {'Auth-Key': apiAuthKey},
                 params: {jsonFile: '@jsonFile'},
                 isArray: false,
                 timeout: 4000
             }
         });
+        var resProtected = res.bind({access_token: function () {
+                return 'sessionStorage.authkey';
+            }});
+        return resProtected;
     }]);

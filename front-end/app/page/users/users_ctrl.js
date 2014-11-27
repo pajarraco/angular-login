@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', function ($scope, RestFul, $filter, UserLevel) {
+app.controller('UsersCtrl', ['$scope', 'RestFul', 'UserLevel', function ($scope, RestFul, UserLevel) {
 
         $('#loader').show();
 
@@ -59,8 +59,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', '$filter', 'UserLevel', functi
                         password: $scope.newuser.password,
                         level: $scope.newuser.level,
                         status: status
-                    }, function (data) {
-                        console.log('data: ', data);
+                    }, function () {
                         $('#loader').hide();
                         $scope.alert = {active: 'active', classAlert: 'alert-success', msgAlert: 'User created'};
                     }, function () {
