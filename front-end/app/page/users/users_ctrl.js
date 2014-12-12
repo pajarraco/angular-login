@@ -9,11 +9,12 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', 'UserLevel', function ($scope,
         $scope.userlevel = sessionStorage.level;
         $scope.userleveloption = UserLevel.getLevels();
 
-        $scope.users = RestFul.get({
+        $scope.users = RestFul.test({
             jsonFile: 'users.json',
             type: 'all'
-        }, function () {
+        }, function (data) {
             $('#loader').hide();
+            console.log('data: ', data);
         }, function () {
             $('#loader').hide();
             $scope.alert = {active: 'active', classAlert: 'alert-danger', msgAlert: 'ERROR: Reading Users, Try Again'};

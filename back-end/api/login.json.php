@@ -1,6 +1,7 @@
 <?php
 
 include 'classes/request.php';
+include 'classes/variables.php';
 
 header('Content-Type: application/json');
 
@@ -23,12 +24,23 @@ if (isset($method)) {
     $users->table = 'users';
     $users->get_table = 'users';
 
+    $variables = new Variables();
+    $type = '';
+    if (isset($_GET['type'])) {
+        $type = $variables->cleanVariable($_GET['type']);
+    }
     switch ($method) {
         case 'GET':
-            switch ($_GET['type']) {
+            switch ($type) {
                 case 'login':
-                    $username = $_GET['username'];
-                    $password = md5($_GET['password']);
+                    $username = '';
+                    if (isset($_GET['username'])) {
+                        $username = $variables->cleanVariable($_GET['username']);
+                    }
+                    $password = '';
+                    if (isset($_GET['password'])) {
+                        $password = md5($variables->cleanVariable($_GET['password']));
+                    }
                     $data = array(array('username' => $username), array('conector' => 'AND'), array('password' => $password), array('conector' => 'AND'), array('status' => '1'));
                     $get_data = array('username', 'level');
                     $users->data = $data;
@@ -58,7 +70,7 @@ if (isset($method)) {
             break;
 
         case 'POST': // check is logged
-            $uid = md5($input_data['uid']);
+            $uid = md5($variables->cleanVariable($input_data['uid']));
             $users->data = array(array('key' => $uid), array('conector' => 'AND'), array('status' => '1'));
             $users->get_data = array('`key`');
             $user_key_array = $users->selectRequest();
