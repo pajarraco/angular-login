@@ -9,7 +9,7 @@ app.controller('UsersCtrl', ['$scope', 'RestFul', 'UserLevel', function ($scope,
         $scope.userlevel = sessionStorage.level;
         $scope.userleveloption = UserLevel.getLevels();
 
-        $scope.users = RestFul.test({
+        $scope.users = RestFul.get({
             jsonFile: 'users.json',
             type: 'all'
         }, function (data) {

@@ -1,6 +1,7 @@
 <?php
 
 include 'request.php';
+include 'variables.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,27 +13,21 @@ include 'request.php';
  *
  * @author Ernesto
  */
-class Auth_Key { //create a class for make connection 
+class Auth_Key {
 
-    function getAuth() { // create a function for connect database
+    function getAuth() {
+        $variables = new Variables();
         $auth = false;
         $headers = apache_request_headers();
-        echo $_GET['auth'];
-        echo 'eee';
         if (isset($headers['Auth-Key'])) {
             $authReq = new Request();
             $authReq->get_table = 'site';
             $authReq->data = array(array('key' => $headers['Auth-Key']));
             $authReq->get_data = array('`key`');
             $site_key = $authReq->selectRequest();
-            $getAuth = '';
-            if (isset($_GET['auth'])) {
-                $getAuth = $_GET['auth'];
-            }
-            echo $getAuth;
-            if (($getAuth != 'client') && (isset($_GET['access_token']))) {
+            if (isset($_GET['access_token'])) {
                 $authReq->get_table = 'users';
-                $authReq->data = array(array('key' => $_GET['access_token']));
+                $authReq->data = array(array('key' => $variables->cleanVariable($_GET['access_token'])));
                 $authReq->get_data = array('`key`');
                 $user_key = $authReq->selectRequest();
             } else {
@@ -50,3 +45,4 @@ class Auth_Key { //create a class for make connection
     }
 
 }
+

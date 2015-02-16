@@ -1,7 +1,6 @@
 <?php
 
 include 'classes/auth_key.php';
-include 'classes/variables.php';
 header('Content-Type: application/json');
 
 $site = new Auth_Key();
