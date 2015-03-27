@@ -7,7 +7,6 @@ app.directive('ensureUnique', ['RestFul', function (RestFul) {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
                 scope.$watch(attrs.ngModel, function () {
-                    // :: TODO :: $watch stop working on mail ?????
                     if ((attrs.ensureUnique !== '') && (attrs.action === 'new')) {
                         RestFul.get({
                             jsonFile: 'users.json',
@@ -20,7 +19,10 @@ app.directive('ensureUnique', ['RestFul', function (RestFul) {
                                 ctrl.$setValidity('unique', false);
                             }
                         });
+                    } else {
+                        ctrl.$setValidity('unique', true);
                     }
+
                 });
             }
         };
