@@ -16,6 +16,7 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService',
                         sessionService.set('uid', data[0]);
                         sessionService.set('authkey', data[1]);
                         sessionService.set('level', data[2]);
+                        sessionService.set('username', login.username);
                         $location.path('home');
                         return true;
                     } else {
@@ -57,8 +58,9 @@ app.factory('sessionService', ['RestFul', function (RestFul) {
             destroy: function () {
                 RestFul.delete({
                     jsonFile: 'login.json',
-                    uid: sessionStorage.uid
+                    uid: sessionStorage.username
                 }, function () {
+                    sessionStorage.removeItem('username');
                     sessionStorage.removeItem('uid');
                     sessionStorage.removeItem('authkey');
                     sessionStorage.removeItem('level');
