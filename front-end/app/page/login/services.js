@@ -6,25 +6,26 @@ app.factory('loginService', ['RestFul', '$location', 'sessionService',
     function (RestFul, $location, sessionService) {
         return{
             login: function (login) {
-                RestFul.get({
-                    jsonFile: 'login.json',
-                    type: 'login',
-                    username: login.username,
-                    password: login.password
-                }, function (data) {
-                    if ((data[0] !== 'logout') && (data.length > 1)) {
-                        sessionService.set('uid', data[0]);
-                        sessionService.set('authkey', data[1]);
-                        sessionService.set('level', data[2]);
-                        sessionService.set('username', login.username);
-                        $location.path('home');
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }, function (err) {
-                    throw err;
-                    return false;
+                return $q(function (logged) {
+                    RestFul.get({
+                        jsonFile: 'login.json',
+                        type: 'login',
+                        username: login.username,
+                        password: login.password
+                    }, function (data) {
+                        if ((data[0] !== 'logout') && (data.length > 1)) {
+                            sessionService.set('uid', data[0]);
+                            sessionService.set('authkey', data[1]);
+                            sessionService.set('level', data[2]);
+                            sessionService.set('username', login.username);
+                            $location.path('home');
+                            logged(true);
+                        } else {
+                            logged(false);
+                        }
+                    }, function () {
+                        logged(false);
+                    });
                 });
             },
             logout: function () {
